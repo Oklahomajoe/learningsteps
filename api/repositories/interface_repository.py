@@ -16,7 +16,7 @@ class DatabaseInterface(ABC):
         pass
 
     @abstractmethod
-    async def get_entry(self, entry_id: str) -> Dict[str, Any]:
+    async def get_entry(self, entry_id: str) -> Dict[str, Any] | None:
         """Retrieve a specific journal entry by ID."""
         pass
 

@@ -1,5 +1,6 @@
 import logging
 from typing import AsyncGenerator
+from uuid import UUID
 from fastapi import APIRouter, HTTPException, Request, Depends
 from repositories.postgres_repository import PostgresDB
 from services.entry_service import EntryService
@@ -49,18 +50,12 @@ async def get_all_entries(entry_service: EntryService = Depends(get_entry_servic
     return {"entries": result, "count": len(result)}
 
 @router.get("/entries/{entry_id}")
-async def get_entry(request: Request, entry_id: str, entry_service: EntryService = Depends(get_entry_service)):
-    """
-    TODO: Implement this endpoint to return a single journal entry by ID
-    
-    Steps to implement:
-    1. Use the entry_service to get the entry by ID
-    2. Return 404 if entry not found
-    3. Return the entry as JSON if found
-    
-    Hint: Check the update_entry endpoint for similar patterns
-    """
-    raise HTTPException(status_code=501, detail="Not implemented - complete this endpoint!")
+async def get_entry(entry_id: UUID, entry_service: EntryService = Depends(get_entry_service)):
+    """Return one journal entry, or 404 if it does not exist."""
+    entry = await entry_service.get_entry(str(entry_id))
+    if entry is None:
+        raise HTTPException(status_code=404, detail="Entry not found")
+    return entry
 
 @router.patch("/entries/{entry_id}")
 async def update_entry(entry_id: str, entry_update: dict, entry_service: EntryService = Depends(get_entry_service)):

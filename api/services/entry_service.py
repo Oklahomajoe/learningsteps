@@ -30,7 +30,7 @@ class EntryService:
         logger.debug("Fetched %d entries", len(entries))
         return entries
 
-    async def get_entry(self, entry_id: str) -> Dict[str, Any]:
+    async def get_entry(self, entry_id: str) -> Dict[str, Any] | None:
         """Gets a specific entry."""
         logger.info("Fetching entry %s", entry_id)
         entry = await self.db.get_entry(entry_id)
