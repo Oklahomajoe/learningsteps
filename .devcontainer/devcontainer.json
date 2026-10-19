@@ -5,13 +5,14 @@
   "dockerComposeFile": ["./docker-compose.yml"],
   "features": {
 		// TODO: Add one of these cloud CLI tools based on your needs:
-        // "ghcr.io/devcontainers/features/azure-cli:1": {},
+        "ghcr.io/devcontainers/features/azure-cli:1": {}
         // "ghcr.io/devcontainers/features/aws-cli:1": {},
         // "ghcr.io/devcontainers/features/gcloud:1": {}
 	},
   
   "service": "devcontainer",
   "workspaceFolder": "/workspaces/",
+  "postCreateCommand": "python -m pip install -r /workspaces/api/requirements.txt",
   "runServices": ["postgres"]
   
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
