@@ -67,22 +67,12 @@ async def update_entry(entry_id: str, entry_update: dict, entry_service: EntrySe
     
     return result
 
-# TODO: Implement DELETE /entries/{entry_id} endpoint to remove a specific entry
-# Return 404 if entry not found
 @router.delete("/entries/{entry_id}")
-async def delete_entry(entry_id: str, entry_service: EntryService = Depends(get_entry_service)):
-    """
-    TODO: Implement this endpoint to delete a specific journal entry
-    
-    Steps to implement:
-    1. Check if the entry exists first
-    2. Delete the entry using entry_service
-    3. Return appropriate response
-    4. Return 404 if entry not found
-    
-    Hint: Look at how the update_entry endpoint checks for existence
-    """
-    raise HTTPException(status_code=501, detail="Not implemented - complete this endpoint!")
+async def delete_entry(entry_id: UUID, entry_service: EntryService = Depends(get_entry_service)):
+    """Delete one journal entry, or return 404 if it does not exist."""
+    if not await entry_service.delete_entry(str(entry_id)):
+        raise HTTPException(status_code=404, detail="Entry not found")
+    return {"detail": "Entry deleted successfully", "id": str(entry_id)}
 
 @router.delete("/entries")
 async def delete_all_entries(entry_service: EntryService = Depends(get_entry_service)):
