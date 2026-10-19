@@ -1,5 +1,21 @@
 # LearningSteps API
 
+> **Origins - Implementierungsstand, 19.10.2026**
+>
+> Dieser Fork enthält die fertige API mit Einzelabruf, Einzellöschung, Logging,
+> Eingabevalidierung und atomaren Teiländerungen. Die sechs Feature-PRs sind
+> zusammengeführt: [PR-Verlauf](https://github.com/Oklahomajoe/learningsteps/pulls?q=is%3Apr+is%3Amerged).
+>
+> Der kombinierte Stand hat 41 lokale Integrationsprüfungen bestanden. Die
+> separate Azure-Bereitstellung wurde einschließlich HTTPS, Zugriffsschutz,
+> Netzwerktrennung und Persistenz bei API-Neubereitstellung und VM-Neustart geprüft.
+> [Testdurchführung und Grenzen](tests/README.md).
+>
+> Der technische Bericht und ein vollständig getesteter Azure-Wiederaufbau nach
+> Löschung werden anschließend ergänzt. Noch keine Kurseinreichung.
+> Die folgenden Abschnitte enthalten die ursprünglichen Einrichtungshinweise
+> und die nun umgesetzten Aufgaben der Developer-Version.
+
 Welcome to LearningSteps! LearningSteps is a Python FastAPI + PostgreSQL application that helps people track their daily learning journey. In this project, you will build, extend, and finally deploy LearningSteps to the cloud!
 
 
@@ -96,11 +112,11 @@ Complete a learning journal API that allows users to:
 
 - ✅ **Store journal entries** (already implemented)
 - ✅ **Retrieve all journal entries** (already implemented)
-- ❌ **Retrieve single journal entry** (you need to implement)  
-- ❌ **Delete specific journal entries** (you need to implement)
+- ✅ **Retrieve single journal entry** (implemented in this fork)
+- ✅ **Delete specific journal entries** (implemented in this fork)
 - ✅ **Update journal entries** (already implemented)
 - ✅ **Delete all entries** (already implemented)
-- ❌ **Setup logging** (you need to implement)
+- ✅ **Setup logging** (implemented in this fork)
 
 ## 🎯 Development Tasks (Your Work!)
 
@@ -111,27 +127,27 @@ You'll use **feature branches** and **Pull Requests (PRs)** for each task. Compl
 #### Task 1a: GET Single Entry Endpoint
 
 - Branch: `feature/get-single-entry`
-- [ ] Implement **GET /entries/{entry_id}** in `api/routers/journal_router.py`
+- [x] Implement **GET /entries/{entry_id}** in `api/routers/journal_router.py`
 
 #### Task 1b: DELETE Single Entry Endpoint
 
 - Branch: `feature/delete-entry`
-- [ ] Implement **DELETE /entries/{entry_id}** in `api/routers/journal_router.py`
+- [x] Implement **DELETE /entries/{entry_id}** in `api/routers/journal_router.py`
 
 ### 2. Logging Setup (Required)
 
 - Branch: `feature/logging-setup`
-- [ ] Configure logging in `api/main.py`
+- [x] Configure logging in `api/main.py`
 
 ### 3. Data Model Improvements (Optional)
 
 - Branch: `feature/data-model-improvements`  
-- [ ] Add validators to `api/models/entry.py`
+- [x] Add validators to `api/models/entry.py`
 
 ### 4. Cloud CLI Setup (Required for Deployment)
 
 - Branch: `feature/cloud-cli-setup`
-- [ ] Uncomment one CLI tool in `.devcontainer/devcontainer.json`
+- [x] Uncomment one CLI tool in `.devcontainer/devcontainer.json`
 
 ## 📊 Data Schema
 
