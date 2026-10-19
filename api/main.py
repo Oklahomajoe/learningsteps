@@ -3,18 +3,26 @@ from fastapi.responses import RedirectResponse
 from dotenv import load_dotenv
 from routers.journal_router import router as journal_router
 import logging
+import sys
+from contextlib import asynccontextmanager
 
 load_dotenv()
 
-# TODO: Setup basic console logging
-# Hint: Use logging.basicConfig() with level=logging.INFO
-# Steps:
-# 1. Configure logging with basicConfig()
-# 2. Set level to logging.INFO
-# 3. Add console handler
-# 4. Test by adding a log message when the app starts
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s %(message)s",
+    stream=sys.stdout,
+)
+logger = logging.getLogger("journal")
 
-app = FastAPI(title="LearningSteps API", description="A simple learning journal API for tracking daily work, struggles, and intentions")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    logger.info("LearningSteps API started")
+    yield
+    logger.info("LearningSteps API stopped")
+
+app = FastAPI(title="LearningSteps API", description="A simple learning journal API for tracking daily work, struggles, and intentions", lifespan=lifespan)
 app.include_router(journal_router)
 
 

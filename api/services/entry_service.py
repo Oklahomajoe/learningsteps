@@ -20,7 +20,7 @@ class EntryService:
             "created_at": now,
             "updated_at": now
         }
-        logger.debug("Entry created: %s", entry)
+        logger.debug("Entry prepared for storage")
         return await self.db.create_entry(entry)
 
     async def get_all_entries(self) -> List[Dict[str, Any]]:
