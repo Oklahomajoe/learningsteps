@@ -4,7 +4,6 @@ import uuid
 import asyncpg
 from datetime import datetime, timezone
 from typing import Any, Dict, List
-from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 from repositories.interface_repository import DatabaseInterface
 
@@ -94,20 +93,33 @@ class PostgresDB(DatabaseInterface):
                 }
             return None
    
-    async def update_entry(self, entry_id: str, updated_data: Dict[str, Any]) -> None:
+    async def update_entry(self, entry_id: str, updated_data: Dict[str, Any]) -> Dict[str, Any] | None:
         updated_at = datetime.now(timezone.utc)
-        updated_data["id"] = entry_id
-        updated_data["updated_at"] = updated_at
-
-        data_json = json.dumps(updated_data, default=PostgresDB.datetime_serialize)
+        changes = {
+            **{key: value for key, value in updated_data.items() if key in {"work", "struggle", "intention"}},
+            "updated_at": updated_at,
+        }
+        data_json = json.dumps(changes, default=PostgresDB.datetime_serialize)
 
         async with self.pool.acquire() as conn:
             query = """
             UPDATE entries 
-            SET data = $2, updated_at = $3
+            SET data = data || $2::jsonb, updated_at = $3
             WHERE id = $1
+            RETURNING *
             """
-            await conn.execute(query, entry_id, data_json, updated_at)
+            row = await conn.fetchrow(query, entry_id, data_json, updated_at)
+            if row is None:
+                return None
+            data = json.loads(row["data"])
+            return {
+                "id": row["id"],
+                "work": data.get("work", ""),
+                "struggle": data.get("struggle", ""),
+                "intention": data.get("intention", ""),
+                "created_at": row["created_at"],
+                "updated_at": row["updated_at"],
+            }
 
     async def delete_entry(self, entry_id: str) -> bool:
         async with self.pool.acquire() as conn:

@@ -6,7 +6,7 @@ class DatabaseInterface(ABC):
     """Abstract interface for database operations."""
     
     @abstractmethod
-    async def create_entry(self, entry_data: Dict[str, Any]) -> None:
+    async def create_entry(self, entry_data: Dict[str, Any]) -> Dict[str, Any]:
         """Create a new journal entry."""
         pass
 
@@ -21,7 +21,7 @@ class DatabaseInterface(ABC):
         pass
 
     @abstractmethod
-    async def update_entry(self, entry_id: str, updated_data: Dict[str, Any]) -> None:
+    async def update_entry(self, entry_id: str, updated_data: Dict[str, Any]) -> Dict[str, Any] | None:
         """Update an existing journal entry."""
         pass
 
