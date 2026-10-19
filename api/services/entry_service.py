@@ -58,11 +58,12 @@ class EntryService:
         logger.debug("Entry %s updated", entry_id)
         return updated_data
 
-    async def delete_entry(self, entry_id: str) -> None:
+    async def delete_entry(self, entry_id: str) -> bool:
         """Deletes a specific entry."""
         logger.info("Deleting entry %s", entry_id)
-        await self.db.delete_entry(entry_id)
-        logger.debug("Entry %s deleted", entry_id)
+        deleted = await self.db.delete_entry(entry_id)
+        logger.debug("Entry %s deletion result: %s", entry_id, deleted)
+        return deleted
 
     async def delete_all_entries(self) -> None:
         """Deletes all entries."""
