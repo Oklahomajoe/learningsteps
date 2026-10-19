@@ -11,8 +11,12 @@
 > Netzwerktrennung und Persistenz bei API-Neubereitstellung und VM-Neustart geprüft.
 > [Testdurchführung und Grenzen](tests/README.md).
 >
-> Der technische Bericht und ein vollständig getesteter Azure-Wiederaufbau nach
-> Löschung werden anschließend ergänzt. Noch keine Kurseinreichung.
+> Der technische Bericht und der vollständige Neuaufbau in einer frischen
+> separaten Azure-Gruppe sind abgeschlossen. Datenimport, neue Zertifikate,
+> HTTPS und ein erneuter API-VM-Neustart wurden erfolgreich geprüft. Danach
+> wurden beide Projektgruppen entfernt. Die API ist in der Kostenpause
+> absichtlich offline. Startskript, Demoablauf und Nachweise liegen im
+> Abgabepaket; private Wiederherstellungsdateien bleiben lokal. Noch keine Kurseinreichung.
 > Die folgenden Abschnitte enthalten die ursprünglichen Einrichtungshinweise
 > und die nun umgesetzten Aufgaben der Developer-Version.
 
